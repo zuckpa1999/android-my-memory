@@ -10,9 +10,14 @@ import android.widget.ImageButton
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.mymemory.models.BoardSize
 import java.lang.Integer.min
 
-class MemoryBoardAdapter(private val context: Context, private val numPieces: Int) :
+class MemoryBoardAdapter(
+    private val context: Context,
+    private val boardSize: BoardSize,
+    private val cardImages: List<Int>
+) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val  MARGIN_SIZE = 10
@@ -24,8 +29,8 @@ class MemoryBoardAdapter(private val context: Context, private val numPieces: In
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
 
-        val cardWidth = parent.width / 2 - (2 * MARGIN_SIZE * 2)
-        val cardHeight = parent.height /4- (2 * MARGIN_SIZE * 2)
+        val cardWidth = parent.width / boardSize.getWidth() - (2 * MARGIN_SIZE * 2)
+        val cardHeight = parent.height /boardSize.getHeight() -  (2 * MARGIN_SIZE * 2)
         val cardSideLength = min(cardWidth,cardHeight)
 
         //  , 2nd: parent: root viewgroup , 3rd: atached to root?
@@ -41,29 +46,32 @@ class MemoryBoardAdapter(private val context: Context, private val numPieces: In
     }
 
     // how many elements in recycler view
-    override fun getItemCount() = numPieces
+    override fun getItemCount() = boardSize.numCards
 
 
     //taking data and bind it to view holder that we pass
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.bind(position)
+        holder.bind(position,cardImages)
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
         private val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
-        fun bind(position: Int){
-            imageButton.setOnClickListener {
-                Log.i(TAG, "Clicked on position $position")
-            }
-
-        }
+//        fun bind(position: Int,cardImages: list){
+//
+//            imageButton.setOnClickListener {
+//                Log.i(TAG, "Clicked on position $position")
+//            }
+//
+//        }
 
     }
 
 }
 
-private fun RecyclerView.ViewHolder.bind(position: Int) {
+private fun RecyclerView.ViewHolder.bind(position: Int, cardImages:List<Int>) {
+
      val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
+    imageButton.setImageResource(cardImages[position])
     imageButton.setOnClickListener {
         Log.i(MemoryBoardAdapter.TAG, "Clicked on position $position")
     }

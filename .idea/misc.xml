@@ -3,7 +3,17 @@
   <component name="DesignSurface">
     <option name="filePathToZoomLevelMap">
       <map>
-        <entry key="app/src/main/res/layout/activity_main.xml" value="0.27269066511934276" />
+        <entry key="../../../../layout/custom_preview.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_bed.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_cloud.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_face.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_heart.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_house.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_mail.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_pencil.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_plane.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/drawable/ic_trash.xml" value="0.26851851851851855" />
+        <entry key="app/src/main/res/layout/activity_main.xml" value="0.33" />
         <entry key="app/src/main/res/layout/memory_card.xml" value="0.2617753623188406" />
       </map>
     </option>
