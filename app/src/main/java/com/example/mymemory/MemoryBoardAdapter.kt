@@ -1,6 +1,7 @@
 package com.example.mymemory
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
@@ -9,19 +10,28 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import androidx.annotation.RequiresApi
 import androidx.cardview.widget.CardView
+import androidx.core.content.ContextCompat
+import androidx.core.view.ViewCompat
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymemory.models.BoardSize
+import com.example.mymemory.models.MemoryCard
 import java.lang.Integer.min
 
 class MemoryBoardAdapter(
     private val context: Context,
     private val boardSize: BoardSize,
-    private val cardImages: List<Int>
+    private val cards: List<MemoryCard>,
+    private val cardClickListener: CardClickListener
 ) :
     RecyclerView.Adapter<RecyclerView.ViewHolder>() {
     companion object {
         private const val  MARGIN_SIZE = 10
         public const val TAG ="MemoryBoardAdapter"
+    }
+
+    interface CardClickListener{
+        fun onCardClicked(position: Int)
+
     }
     //figuring out how to create 1 view of our recycler view
     @RequiresApi(Build.VERSION_CODES.N)
@@ -51,7 +61,7 @@ class MemoryBoardAdapter(
 
     //taking data and bind it to view holder that we pass
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
-        holder.bind(position,cardImages)
+        holder.bind(position,cards,cardClickListener,context)
     }
 
     inner class ViewHolder(itemView: View): RecyclerView.ViewHolder(itemView){
@@ -68,12 +78,18 @@ class MemoryBoardAdapter(
 
 }
 
-private fun RecyclerView.ViewHolder.bind(position: Int, cardImages:List<Int>) {
-
+private fun RecyclerView.ViewHolder.bind(position: Int, cards:List<MemoryCard>,cardClickListener: MemoryBoardAdapter.CardClickListener,context:Context) {
+    val memoryCard = cards[position]
      val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
-    imageButton.setImageResource(cardImages[position])
+    imageButton.setImageResource( if(memoryCard.isFaceUp) memoryCard.identifier else R.drawable.ic_launcher_background)
+
+    imageButton.alpha = if(memoryCard.isMatched) .4f else 1.0f
+//    var colorStateList:ColorStateList? = if(memoryCard.isMatched) ContextCompat.getColorStateList(context, R.color.color_gray) else null
+//    ViewCompat.setBackgroundTintList(imageButton,colorStateList)
     imageButton.setOnClickListener {
         Log.i(MemoryBoardAdapter.TAG, "Clicked on position $position")
+        cardClickListener.onCardClicked(position)
+
     }
 
 }
