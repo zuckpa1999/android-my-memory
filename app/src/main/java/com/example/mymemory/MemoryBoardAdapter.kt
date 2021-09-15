@@ -78,7 +78,7 @@ class MemoryBoardAdapter(
 
 }
 
-private fun RecyclerView.ViewHolder.bind(position: Int, cards:List<MemoryCard>,cardClickListener: MemoryBoardAdapter.CardClickListener,context:Context) {
+internal fun RecyclerView.ViewHolder.bind(position: Int, cards:List<MemoryCard>, cardClickListener: MemoryBoardAdapter.CardClickListener, context:Context) {
     val memoryCard = cards[position]
      val imageButton = itemView.findViewById<ImageButton>(R.id.imageButton)
     imageButton.setImageResource( if(memoryCard.isFaceUp) memoryCard.identifier else R.drawable.ic_launcher_background)

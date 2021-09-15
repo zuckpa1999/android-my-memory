@@ -1,17 +1,32 @@
 package com.example.mymemory
 
+import android.net.Uri
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
+import android.widget.Button
+import android.widget.EditText
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.mymemory.models.BoardSize
 import com.example.mymemory.utils.EXTRA_BOARD_SIZE
 
 class CreateActivity : AppCompatActivity() {
+
+    private lateinit var rvImagePicker: RecyclerView
+    private lateinit var etGameName: EditText
+    private lateinit var btnSave: Button
+
     private lateinit var boardSize: BoardSize
-    private var numImagesRequired = 1
+    private var numImagesRequired = -1
+    private val chosenImageUris = mutableListOf<Uri>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_create)
+
+        rvImagePicker = findViewById(R.id.rvImagePicker)
+        etGameName = findViewById(R.id.etGameName)
+        btnSave = findViewById(R.id.btnSave)
 
         // go back
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
@@ -20,6 +35,11 @@ class CreateActivity : AppCompatActivity() {
         numImagesRequired = boardSize.getNumpairs()
         supportActionBar?.title = "Choose pics ( 0 / ${numImagesRequired}"
 
+        // recycler view required 2 main component : the adapter and the layout manager
+
+        rvImagePicker.adapter = ImagePickerAdapter(this,chosenImageUris,boardSize)
+        rvImagePicker.setHasFixedSize(true)
+        rvImagePicker.layoutManager = GridLayoutManager(this,boardSize.getWidth())
     }
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
