@@ -17,6 +17,7 @@ enum class BoardSize(val numCards: Int){
         return numCards / getWidth()
     }
 
+    // numPairs = all the box /2 === number of unique pgotos
     fun getNumpairs(): Int{
         return numCards / 2
 
